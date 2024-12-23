@@ -45,6 +45,7 @@ function simulateWordForward() {
   });
   simEvent(ctrlRightEvent);
 }
+
 function simulateWordBackward() {
   const ctrlRightEvent = new KeyboardEvent("keydown", {
     bubbles: true,
@@ -127,9 +128,9 @@ function del() {
   simEvent(deleteEvent);
 }
 
-function jmp(num){
+function jmp(num) {
   pageTop();
-  for(var i = 0; i < num; i++) {
+  for (var i = 0; i < num; i++) {
     simChar("j");
   }
 }
@@ -176,15 +177,13 @@ function vimKeybinds(key) {
     pageBottom();
   } else if (key === "g" && previous_key === "g") {
     pageTop();
-  } else if(key === 'd' && previous_key === 'd'){
+  } else if (key === "d" && previous_key === "d") {
     deleteLine();
-  }else if (key === "x") {
+  } else if (key === "x") {
     del();
-  }
-  else if (key === "u") {
+  } else if (key === "u") {
     undo();
-  }
-    else if (key >= "0" && key <= "9") {
+  } else if (key >= "0" && key <= "9") {
     if (store_num_bool) {
       store_num = store_num * 10 + parseInt(key);
     } else {
@@ -194,10 +193,10 @@ function vimKeybinds(key) {
   } else {
     previous_key = key;
   }
-  }
+}
 
+const styleSheet = document.createElement("style");
 
-  const styleSheet = document.createElement("style");
 styleSheet.textContent = `
   #kix-current-user-cursor-caret.normal-mode {
     border-left: 6px solid black !important;
@@ -206,15 +205,15 @@ styleSheet.textContent = `
   }
 `;
 
-document.head.appendChild(styleSheet);
-
 function updateCursorStyle(currentMode) {
-  const cursor = document.getElementById('kix-current-user-cursor-caret');
+  const cursor = document.getElementById("kix-current-user-cursor-caret");
   if (cursor) {
-    cursor.classList.remove('normal-mode', 'insert-mode');
+    cursor.classList.remove("normal-mode", "insert-mode");
     cursor.classList.add(`${currentMode}-mode`);
   }
 }
+
+document.head.appendChild(styleSheet);
 
 iframeDoc.addEventListener("keydown", function (e) {
   const key = e.key;
@@ -223,11 +222,11 @@ iframeDoc.addEventListener("keydown", function (e) {
     e.preventDefault();
     if (key === "i") {
       mode = "insert";
-      updateCursorStyle('insert');
-    } else if (key === 'a') {
+      updateCursorStyle("insert");
+    } else if (key === "a") {
       simChar("ArrowRight");
       mode = "insert";
-      updateCursorStyle('insert');
+      updateCursorStyle("insert");
     } else if (key === "v") {
       mode = "visual";
     } else {
@@ -244,11 +243,9 @@ iframeDoc.addEventListener("keydown", function (e) {
   } else {
     if (key === "Escape") {
       mode = "normal";
-      updateCursorStyle('normal');
+      updateCursorStyle("normal");
     }
   }
 });
 
-
-
-updateCursorStyle('normal');
+updateCursorStyle("normal");
