@@ -1,0 +1,19 @@
+{
+  "name": "Vim keybinds for MAC google docs",
+  "version": "1.0.0",
+  "description": "Vim keybinds for MAC google docs",
+  "manifest_version": 3,
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "vimscript.js"
+      ],
+      "matches": [
+        "*://docs.google.com/document/*"
+      ]
+    }
+  ]
+}
