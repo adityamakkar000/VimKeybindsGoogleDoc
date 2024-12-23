@@ -197,6 +197,25 @@ function vimKeybinds(key) {
   }
 
 
+  const styleSheet = document.createElement("style");
+styleSheet.textContent = `
+  #kix-current-user-cursor-caret.normal-mode {
+    border-left: 6px solid black !important;
+  }
+  #kix-current-user-cursor-caret.insert-mode {
+  }
+`;
+
+document.head.appendChild(styleSheet);
+
+function updateCursorStyle(currentMode) {
+  const cursor = document.getElementById('kix-current-user-cursor-caret');
+  if (cursor) {
+    cursor.classList.remove('normal-mode', 'insert-mode');
+    cursor.classList.add(`${currentMode}-mode`);
+  }
+}
+
 iframeDoc.addEventListener("keydown", function (e) {
   const key = e.key;
 
@@ -204,9 +223,11 @@ iframeDoc.addEventListener("keydown", function (e) {
     e.preventDefault();
     if (key === "i") {
       mode = "insert";
+      updateCursorStyle('insert');
     } else if (key === 'a') {
       simChar("ArrowRight");
       mode = "insert";
+      updateCursorStyle('insert');
     } else if (key === "v") {
       mode = "visual";
     } else {
@@ -223,6 +244,11 @@ iframeDoc.addEventListener("keydown", function (e) {
   } else {
     if (key === "Escape") {
       mode = "normal";
+      updateCursorStyle('normal');
     }
   }
 });
+
+
+
+updateCursorStyle('normal');
